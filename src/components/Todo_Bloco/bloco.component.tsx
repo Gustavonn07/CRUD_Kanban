@@ -5,7 +5,7 @@ import { BlocoProps } from './interface/bloco.interface';
 const Todo_Bloco: React.FC<BlocoProps> = ({ titulo, todos, onDrop, onDragOver, onDragStart, blocoIndex, abrirModal }) => {
   return (
     <section
-      className="w-1/4 flex flex-col rounded-lg overflow-hidden shadow-lg shadow-[#00000040]"
+      className="w-2/3 md:w-2/5 lg:w-1/4 flex flex-col rounded-lg overflow-hidden shadow-lg shadow-[#00000040]"
       onDrop={(e) => onDrop(e as React.DragEvent<HTMLDivElement>, blocoIndex)}
       onDragOver={onDragOver}
     >
@@ -14,7 +14,7 @@ const Todo_Bloco: React.FC<BlocoProps> = ({ titulo, todos, onDrop, onDragOver, o
         {titulo}
       </h2>
       
-      <ul className="bg-gray-700 h-[70vh] px-10 pt-4 flex flex-col gap-8">
+      <ul className="bg-gray-700 lg:h-[70vh] min-h-[50vh] lg:px-10 px-4 py-4 flex flex-col gap-8">
         {todos.map((todo, index) => (
           <Todo_Card
             key={todo.texto}

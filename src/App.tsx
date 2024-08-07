@@ -101,14 +101,14 @@ function App() {
   }
 
   return (
-    <main className="w-full h-screen flex flex-col gap-10 justify-center bg-gray-300">
+    <main className="w-full lg:h-screen py-10 flex flex-col gap-10 justify-center bg-gray-300">
       <Todo_Criador
         handleCriar={handleCriar}
         setInputValue={setValorInput}
         inputValue={valorInput}
       />
 
-      <section className="flex justify-between gap-10 px-10">
+      <section className="flex lg:justify-between lg:flex-row flex-col lg:items-start items-center px-4 gap-4 lg:gap-10 lg:px-10">
         {blocos.map((bloco, indexBloco) => (
           <Todo_Bloco
             key={indexBloco}

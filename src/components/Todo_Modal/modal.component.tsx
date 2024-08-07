@@ -4,7 +4,7 @@ const Todo_Modal: React.FC<Modal> = ({ todoId, handleDeletar, fecharModal }) => 
   
 
     return (
-      <section className="absolute w-full h-screen bg-[#00000060] flex justify-center items-center">
+      <section className="fixed top-0 left-0 px-4 w-full h-screen bg-[#00000060] flex justify-center items-center">
 
           <article className="bg-gray-700 p-10 text-gray-100 flex flex-col gap-10 rounded shadow-xl shadow-[#00000040]">
               <h2 className="text-4xl font-semibold">Confirme deletação de tarefa:</h2>
