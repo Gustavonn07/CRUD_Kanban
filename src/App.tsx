@@ -4,9 +4,12 @@ import Todo_Criador from './components/Todo_Criador/criador.component';
 import { Todo } from './components/Todo_Card/interface/todo.interface';
 import { Bloco } from './components/Todo_Bloco/interface/bloco.interface';
 import { timeRefactor } from './utils/timeRefactor';
+import Todo_Modal from './components/Todo_Modal/modal.component';
 
 function App() {
   const [valorInput, setValorInput] = useState<string>('');
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [todoIdParaDeletar, setTodoIdParaDeletar] = useState<number | null>(null); // Ajuste conforme necessário
   const [blocos, setBlocos] = useState<Bloco[]>([
     { titulo: 'Em Pendência', todos: [] },
     { titulo: 'Tarefas', todos: [] },
@@ -15,7 +18,6 @@ function App() {
   ]);
 
   useEffect(() => {
-    
     const blocosSalvos = localStorage.getItem('blocos');
     if (blocosSalvos) {
       setBlocos(JSON.parse(blocosSalvos));
@@ -23,20 +25,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-
     localStorage.setItem('blocos', JSON.stringify(blocos));
   }, [blocos]);
 
   function handleCriar() {
     if (valorInput.trim()) {
       const novaTarefa: Todo = {
+        id: blocos.length > 0 ? Math.max(...blocos.flatMap(bloco => bloco.todos.map(todo => todo.id)), 0) + 1 : 1,
         texto: valorInput,
         imagem: 'https://avatars.githubusercontent.com/u/84361085?v=4',
         data: new Date().toLocaleDateString(),
         horario: timeRefactor(new Date().getHours() * 60 + new Date().getMinutes()),
       };
 
-      setBlocos((blocosAnteriores) => {
+      setBlocos(blocosAnteriores => {
         const blocosAtualizados = [...blocosAnteriores];
         blocosAtualizados[0].todos.push(novaTarefa);
         return blocosAtualizados;
@@ -44,6 +46,17 @@ function App() {
 
       setValorInput('');
     }
+  }
+
+  function handleDeletar(todoId: number) {
+    setBlocos(blocosAnteriores => {
+      const blocosAtualizados = blocosAnteriores.map(bloco => ({
+        ...bloco,
+        todos: bloco.todos.filter(todo => todo.id !== todoId)
+      }));
+
+      return blocosAtualizados;
+    });
   }
 
   function handleDragStart(e: React.DragEvent<HTMLLIElement>, indexTarefa: number, indexBloco: number) {
@@ -56,7 +69,7 @@ function App() {
     const indexTarefa = parseInt(e.dataTransfer.getData('indexTarefa'));
     const indexBlocoOrigem = parseInt(e.dataTransfer.getData('indexBlocoOrigem'));
 
-    setBlocos((blocosAnteriores) => {
+    setBlocos(blocosAnteriores => {
       const blocosAtualizados = [...blocosAnteriores];
       const blocoOrigem = blocosAtualizados[indexBlocoOrigem];
       const blocoDestino = blocosAtualizados[indexBlocoDestino];
@@ -77,15 +90,25 @@ function App() {
     e.preventDefault();
   }
 
+  function abrirModal(todoId: number) {
+    setTodoIdParaDeletar(todoId);
+    setOpenModal(true);
+  }
+
+  function fecharModal() {
+    setTodoIdParaDeletar(null);
+    setOpenModal(false);
+  }
+
   return (
-    <main className="w-full h-screen flex flex-col px-10 gap-10 justify-center bg-gray-300">
+    <main className="w-full h-screen flex flex-col gap-10 justify-center bg-gray-300">
       <Todo_Criador
         handleCriar={handleCriar}
         setInputValue={setValorInput}
         inputValue={valorInput}
       />
 
-      <section className="flex justify-between gap-10">
+      <section className="flex justify-between gap-10 px-10">
         {blocos.map((bloco, indexBloco) => (
           <Todo_Bloco
             key={indexBloco}
@@ -95,9 +118,18 @@ function App() {
             onDragOver={handleDragOver}
             onDragStart={(e, indexTarefa) => handleDragStart(e as React.DragEvent<HTMLLIElement>, indexTarefa, indexBloco)}
             blocoIndex={indexBloco}
+            abrirModal={abrirModal}
           />
         ))}
       </section>
+
+      {openModal && (
+        <Todo_Modal
+          todoId={todoIdParaDeletar}
+          handleDeletar={handleDeletar}
+          fecharModal={fecharModal}
+        />
+      )}
     </main>
   );
 }

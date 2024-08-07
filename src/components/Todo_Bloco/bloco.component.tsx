@@ -2,7 +2,7 @@ import React from 'react';
 import Todo_Card from '../Todo_Card/todo.component';
 import { BlocoProps } from './interface/bloco.interface';
 
-const Todo_Bloco: React.FC<BlocoProps> = ({ titulo, todos, onDrop, onDragOver, onDragStart, blocoIndex }) => {
+const Todo_Bloco: React.FC<BlocoProps> = ({ titulo, todos, onDrop, onDragOver, onDragStart, blocoIndex, abrirModal }) => {
   return (
     <section
       className="w-1/4 flex flex-col rounded-lg overflow-hidden shadow-lg shadow-[#00000040]"
@@ -21,6 +21,7 @@ const Todo_Bloco: React.FC<BlocoProps> = ({ titulo, todos, onDrop, onDragOver, o
             todo={todo}
             index={index}
             onDragStart={onDragStart}
+            abrirModal={abrirModal}
           />
         ))}
       </ul>

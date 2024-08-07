@@ -1,8 +1,7 @@
-import React from 'react';
 import { TodoProps } from './interface/todo.interface';
 
-const Todo_Card: React.FC<TodoProps> = ({ todo, index, onDragStart }) => {
-  
+const Todo_Card: React.FC<TodoProps> = ({ todo, index, onDragStart, abrirModal }) => {
+
   return (
     <li
       draggable
@@ -15,7 +14,8 @@ const Todo_Card: React.FC<TodoProps> = ({ todo, index, onDragStart }) => {
         <img src={todo.imagem} alt="Imagem do desenvolvedor" className="w-12 h-12 rounded-full"/>
       </div>
 
-      <div className="text-lg flex gap-1 px-4 items-center self-end">
+      <div className="text-lg flex gap-1 px-4 items-center">
+        <button className='mr-auto bg-red-600 text-gray-100 font-medium rounded hover:-translate-y-1 duration-200 shadow-sm shadow-[#00000010] focus:hover:-translate-y-1 active:-translate-y-0 py-1 px-2' onClick={() => abrirModal(todo.id)}>Deletar</button>
         <p>{todo.data},</p>
         <p>{todo.horario}</p>
       </div>

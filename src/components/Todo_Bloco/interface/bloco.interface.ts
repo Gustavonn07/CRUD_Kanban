@@ -8,8 +8,9 @@ export interface Bloco {
 export interface BlocoProps {
     titulo: string;
     todos: Todo[];
-    onDrop: (e: React.DragEvent<HTMLDivElement>, blocoIndex: number) => void;
-    onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-    onDragStart: (e: React.DragEvent<HTMLLIElement>, index: number) => void;
-    blocoIndex: number;
-  }
+    onDrop: (e: React.DragEvent<HTMLDivElement>, blocoIndex: number) => void,
+    onDragOver: (e: React.DragEvent<HTMLDivElement>) => void,
+    onDragStart: (e: React.DragEvent<HTMLLIElement>, index: number) => void,
+    blocoIndex: number,
+    abrirModal: (todo_id: number) => void
+}

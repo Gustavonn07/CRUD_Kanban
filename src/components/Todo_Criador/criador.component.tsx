@@ -3,7 +3,7 @@ import { Criador } from "./interface/criador.interface";
 const Todo_Criador = ({handleCriar ,setInputValue, inputValue }: Criador) => {
 
     return (
-        <section className="flex flex-col self-start gap-5">
+        <section className="px-10 flex flex-col self-start gap-5">
             <label className="text-shadow text-2xl text-gray-700 font-semibold" htmlFor="criador">Adicione uma tarefa:</label>
 
             <div className="flex gap-5">
