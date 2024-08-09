@@ -9,7 +9,7 @@ import Todo_Modal from './components/Todo_Modal/modal.component';
 function App() {
   const [valorInput, setValorInput] = useState<string>('');
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [todoIdParaDeletar, setTodoIdParaDeletar] = useState<number | null>(null); // Ajuste conforme necessário
+  const [todoIdParaDeletar, setTodoIdParaDeletar] = useState<number | null>(null);
   const [blocos, setBlocos] = useState<Bloco[]>([
     { titulo: 'Em Pendência', todos: [] },
     { titulo: 'Tarefas', todos: [] },
